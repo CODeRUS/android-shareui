@@ -19,7 +19,6 @@ public slots:
 
 private:
     void startIntent(const QStringList &params);
-    void runCommand(const QString &jar, const QStringList &params);
 
 };
 

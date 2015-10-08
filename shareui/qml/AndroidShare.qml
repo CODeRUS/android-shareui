@@ -5,13 +5,18 @@ import Sailfish.TransferEngine 1.0
 ShareDialog {
     id: root
 
-    onStatusChanged: {
-        if (status == DialogStatus.Opened) {
-            accept()
+    // Hacka hacking hacky-hacky hacked hacku hacka hack.
+    Connections {
+        target: __silica_applicationwindow_instance
+        onApplicationActiveChanged: {
+            if (!__silica_applicationwindow_instance.applicationActive) {
+                shareItem.start()
+                accept()
+            }
         }
     }
 
-    onAccepted: {
+    Component.onCompleted: {
         shareItem.start()
     }
 

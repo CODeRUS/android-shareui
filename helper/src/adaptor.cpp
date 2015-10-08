@@ -26,17 +26,12 @@ void Adaptor::shareText(const QString &data)
 
 void Adaptor::startIntent(const QStringList &params)
 {
-    runCommand("am.jar", QStringList() << "com.android.commands.am.Am" << "start" << "-a" << "android.intent.action.SEND" << params);
-}
-
-void Adaptor::runCommand(const QString &jar, const QStringList &params)
-{
     QString ANDROID_ROOT(qgetenv("ANDROID_ROOT"));
-    qputenv("CLASSPATH", QString("%1/framework/%2").arg(ANDROID_ROOT).arg(jar).toUtf8());
-
     QString program = ANDROID_ROOT + "/bin/app_process";
     QStringList arguments;
-    arguments << (ANDROID_ROOT + "/bin") << params;
+    arguments << (ANDROID_ROOT + "/bin");
+    arguments << "com.android.commands.am.Am" << "start" << "-a" << "android.intent.action.SEND";
+    arguments << params;
 
     qDebug() << "Executing" << program << arguments;
 
