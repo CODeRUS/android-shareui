@@ -11,6 +11,8 @@ ShareDialog {
         onApplicationActiveChanged: {
             if (!__silica_applicationwindow_instance.applicationActive) {
                 shareItem.start()
+            }
+            else {
                 accept()
             }
         }
