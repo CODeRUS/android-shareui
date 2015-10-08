@@ -2,9 +2,7 @@
 
 MediaTransfer::MediaTransfer(QObject *parent) :
     MediaTransferInterface(parent)
-{
-    _iface = new QDBusInterface("org.coderus.androidshareui", "/", "org.coderus.androidshareui",
-                                QDBusConnection::systemBus(), this);
+{                          QDBusConnection::systemBus(), this);
 }
 
 MediaTransfer::~MediaTransfer()
@@ -34,16 +32,12 @@ QUrl MediaTransfer::serviceIcon() const
 
 void MediaTransfer::shareFile(const QString &filename, const QString mimetype)
 {
-    if (_iface) {
-        _iface->call(QDBus::NoBlock, "shareFile", filename, mimetype);
-    }
+    QProcess::startDetached("/usr/bin/androidshareui", QStringList() << filename << mimetype);
 }
 
 void MediaTransfer::shareText(const QString &data)
 {
-    if (_iface) {
-        _iface->call(QDBus::NoBlock, "shareText", data);
-    }
+    QProcess::startDetached("/usr/bin/androidshareui", QStringList() << data);
 }
 
 void MediaTransfer::cancel()

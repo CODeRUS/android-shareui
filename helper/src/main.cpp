@@ -11,24 +11,26 @@
 
 #include <QCoreApplication>
 #include <QTimer>
-#include "dbusmain.h"
+
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
+    ::setgid(0);
+    ::setuid(0);
     ::chroot("/opt/alien");
     ::chdir("/");
 
     // Hacka hacking hacky-hacky hacked hacku hacka hack.
     qputenv("DBUS_SESSION_BUS_ADDRESS", "unix:path=/run/user/100000/dbus/user_bus_socket");
 
-    QByteArray ANDROID_ROOT("/system");
-    QByteArray ANDROID_DATA("/data");
-
     qputenv("LD_LIBRARY_PATH", "/system/vendor/lib:/system/lib:/vendor/lib:/system_jolla/lib:");
     qputenv("SYSTEM_USER_LANG", "C");
 
-    qputenv("ANDROID_ROOT", ANDROID_ROOT);
-    qputenv("ANDROID_DATA", ANDROID_DATA);
+    qputenv("ANDROID_ROOT", "/system");
+    qputenv("ANDROID_DATA", "/data");
+
+    qputenv("CLASSPATH", "/system/framework/am.jar");
 
     QFile init("/system/script/start_alien.sh");
     if (init.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -60,10 +62,31 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    QCoreApplication app(argc, argv);
-    DBusMain *bus = new DBusMain();
-    QTimer::singleShot(100, bus, SLOT(start()));
-    return app.exec();
+    QString program = "/system/bin/app_process";
+    QStringList arguments;
+    arguments << "/system/bin";
+    arguments << "com.android.commands.am.Am" << "start" << "-a" << "android.intent.action.SEND";
+    arguments << "-t";
+
+    if (argc == 3) {
+        arguments << QString(argv[2]);
+        arguments << "--eu" << "android.intent.extra.STREAM";
+    }
+    else if (argc == 2) {
+        arguments << "text/*";
+        arguments << "--es" << "android.intent.extra.TEXT";
+    }
+    else {
+        return 0;
+    }
+
+    arguments << QString(argv[1]);
+
+    qDebug() << "Executing" << program << arguments;
+
+    QProcess::startDetached(program, arguments);
+
+    return 0;
 }
 
 

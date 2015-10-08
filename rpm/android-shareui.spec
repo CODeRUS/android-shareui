@@ -5,7 +5,7 @@ Name:       android-shareui
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Share to Android
-Version:    0.1.0
+Version:    0.1.2
 Release:    1
 Group:      Qt/Qt
 License:    WTFPL
@@ -34,9 +34,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/*
-/usr/share/dbus-1/system-services/*.service
-/lib/systemd/system/*.service
-/etc/dbus-1/system.d/*.conf
+%attr(4755, root, root) %{_bindir}/*
 %{_libdir}/nemo-transferengine/plugins/*shareplugin.so
 %{_datadir}/nemo-transferengine/plugins/*.qml

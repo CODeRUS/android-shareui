@@ -3,7 +3,6 @@ TEMPLATE = lib
 TARGET = $$qtLibraryTarget(androidshareplugin)
 target.path = /usr/lib/nemo-transferengine/plugins
 
-QT += dbus
 CONFIG += plugin link_pkgconfig
 PKGCONFIG += nemotransferengine-qt5
 

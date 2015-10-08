@@ -8,7 +8,7 @@
 #include <QMimeType>
 #include <QFile>
 #include <QDateTime>
-#include <QtDBus>
+#include <QProcess>
 #include <QVariant>
 
 class MediaTransfer : public MediaTransferInterface
@@ -26,8 +26,6 @@ public:
 private:
     void shareFile(const QString &filename, const QString mimetype);
     void shareText(const QString &data);
-
-    QDBusInterface *_iface;
 
 public slots:
     void	cancel();

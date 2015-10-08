@@ -1,6 +1,0 @@
-[D-BUS Service]
-Name=org.coderus.androidshareui
-Interface=org.coderus.androidshareui
-Exec=/bin/false
-User=root
-SystemdService=androidshareui.service
