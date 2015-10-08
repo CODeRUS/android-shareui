@@ -17,7 +17,7 @@ ShareDialog {
     }
 
     Component.onCompleted: {
-        shareItem.start()
+        __silica_applicationwindow_instance.deactivate()
     }
 
     SailfishShare {

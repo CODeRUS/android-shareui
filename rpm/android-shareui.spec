@@ -9,7 +9,7 @@ Version:    0.1.0
 Release:    1
 Group:      Qt/Qt
 License:    WTFPL
-URL:        http://example.org/
+URL:        https://github.com/CODeRUS/android-shareui
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   aliendalvik
 Requires:   sailfish-version >= 1.1.9
