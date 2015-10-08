@@ -2,7 +2,7 @@
 
 MediaTransfer::MediaTransfer(QObject *parent) :
     MediaTransferInterface(parent)
-{                          QDBusConnection::systemBus(), this);
+{
 }
 
 MediaTransfer::~MediaTransfer()
