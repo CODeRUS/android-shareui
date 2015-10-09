@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.coderus.androidshareui
+Exec=/usr/bin/androidshareui

@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <sys/stat.h>
-#include <QProcess>
-#include <QStringList>
-
 #include <QFile>
 #include <QTextStream>
 
@@ -10,6 +5,7 @@
 #include <unistd.h>
 
 #include <QCoreApplication>
+#include "dbusmain.h"
 #include <QTimer>
 
 #include <QDebug>
@@ -40,6 +36,7 @@ int main(int argc, char *argv[])
             if (line.startsWith("export BOOTCLASSPATH=")) {
                 line=line.mid(21).replace("$FRAMEWORK", "/system/framework");
                 qputenv("BOOTCLASSPATH", line.toUtf8());
+                break;
             }
         }
     }
@@ -55,6 +52,7 @@ int main(int argc, char *argv[])
             if (line.startsWith("export ALIEN_ID=")) {
                 line=line.mid(16);
                 qputenv("ALIEN_ID", line.toUtf8());
+                break;
             }
         }
     }
@@ -62,31 +60,8 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    QString program = "/system/bin/app_process";
-    QStringList arguments;
-    arguments << "/system/bin";
-    arguments << "com.android.commands.am.Am" << "start" << "-a" << "android.intent.action.SEND";
-    arguments << "-t";
-
-    if (argc == 3) {
-        arguments << QString(argv[2]);
-        arguments << "--eu" << "android.intent.extra.STREAM";
-    }
-    else if (argc == 2) {
-        arguments << "text/*";
-        arguments << "--es" << "android.intent.extra.TEXT";
-    }
-    else {
-        return 0;
-    }
-
-    arguments << QString(argv[1]);
-
-    qDebug() << "Executing" << program << arguments;
-
-    QProcess::startDetached(program, arguments);
-
-    return 0;
+    QCoreApplication app(argc, argv);
+    DBusMain *bus = new DBusMain();
+    QTimer::singleShot(0, bus, SLOT(start()));
+    return app.exec();
 }
-
-
