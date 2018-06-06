@@ -5,7 +5,7 @@ Name:       android-shareui
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Share to Android
-Version:    0.1.4
+Version:    0.1.5
 Release:    1
 Group:      Qt/Qt
 License:    WTFPL
@@ -13,6 +13,7 @@ URL:        https://github.com/CODeRUS/android-shareui
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   aliendalvik
 Requires:   sailfish-version >= 1.1.9
+Requires:   nemo-transferengine-qt5 >= 0.3.1
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(nemotransferengine-qt5)

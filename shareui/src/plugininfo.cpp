@@ -28,6 +28,7 @@ void PluginInfo::query()
     info.methodId        = QLatin1String("AndroidSharePlugin");
     info.shareUIPath     = QLatin1String("/usr/share/nemo-transferengine/plugins/AndroidShare.qml");
     info.capabilitities  = capabilities;
+    info.accountIcon     = QStringLiteral("image://theme/icon-m-share-gallery");
     m_infoList.clear();
     m_infoList << info;
 
